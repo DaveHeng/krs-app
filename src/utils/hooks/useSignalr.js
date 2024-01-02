@@ -136,10 +136,6 @@ export function useSignalr(key = 'ConnectHub') {
 	})
 
 	// initConnect()
-
-	return {
-		sendMessage
-	}
 }
 
 function findHubKey(val) {
