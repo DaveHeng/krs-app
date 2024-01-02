@@ -15,6 +15,7 @@ dist.rar
 coverage
 pnpm-lock.yaml
 *.local
+.vscode
 
 /cypress/videos/
 /cypress/screenshots/
