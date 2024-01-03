@@ -2,9 +2,9 @@
 	<a-form :model="state" layout="inline" class="form">
 		<slot name="before"></slot>
 		<a-form-item label="IP地址：" v-if="layout.includes('ip')">
-			<Ipinput @changeIp="onChangeIp" />
+			<IpInput @changeIp="onChangeIp" />
 		</a-form-item>
-    <a-form-item label="安装位置：" v-if="layout.includes('location')">
+		<a-form-item label="安装位置：" v-if="layout.includes('location')">
 			<a-input
 				allowClear
 				v-model:value="state.location"
@@ -75,6 +75,7 @@
 
 <script setup>
 import dayjs from 'dayjs'
+import IpInput from './IpInput.vue'
 const emit = defineEmits(['search'])
 const props = defineProps({
 	layout: {
@@ -87,8 +88,8 @@ const state = reactive({
 	dictCode: '',
 	dictName: '',
 	time: [],
-  ip: '',
-  location: ''
+	ip: '',
+	location: ''
 })
 
 const limitTime = ref()
@@ -141,7 +142,6 @@ function onCalendarChange(val) {
 function onOpenChange(open) {
 	if (open) limitTime.val = []
 }
-
 </script>
 
 <style lang="less" scoped>

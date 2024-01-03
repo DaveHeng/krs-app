@@ -61,6 +61,13 @@ export const sourceData = [
 		title: '系统管理',
 		icon: 'SettingOutlined',
 		children: [
+      {
+				name: 'Device Manage',
+				type: 'M',
+				path: 'deviceManage',
+				title: '设备管理',
+				component: 'deviceManage/index'
+			},
 			{
 				name: 'Map Manage',
 				type: 'M',
@@ -112,6 +119,7 @@ export const sourceData = [
 export const permissions = [
   'Datav',
 	'Online Monitoring',
+  'Device Manage',
 	'System Setting',
 	'DataSearch',
 	'Statistics',

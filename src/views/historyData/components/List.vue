@@ -48,9 +48,6 @@
 					</a-button>
 				</a-tooltip>
 			</template>
-			<template v-if="['压差', '温度'].includes(column.key)">
-				<div>{{ record[column.key] || '-' }}</div>
-			</template>
 		</template>
 	</a-table>
 </template>
