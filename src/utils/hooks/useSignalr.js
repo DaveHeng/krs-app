@@ -4,7 +4,6 @@ import { useOnlineData } from '@/store/modules/onlineData'
 import { useAlarmData } from '@/store/modules/alarmData'
 import { useCommandData } from '@/store/modules/commandData'
 import { useUserInfo } from '@/store/modules/user.js'
-import { refresh } from 'less'
 
 export const signalRType = {
 	connectHub: 'ConnectHub'
@@ -18,11 +17,13 @@ export function useSignalr(key = 'ConnectHub') {
 	const { state: commandData, setCommandData } = useCommandData()
 
 	const connection = new signalR.HubConnectionBuilder()
-		.withUrl(`${import.meta.env.VITE_APP_BASE_API}_base/${key}`, /* {
+		.withUrl(
+			`${import.meta.env.VITE_APP_BASE_API}_base/${key}` /* {
 			headers: {
 				Authorization: `Bearer ${userInfo.token}`
 			}
-		} */)
+		} */
+		)
 		.withAutomaticReconnect()
 		.configureLogging(signalR.LogLevel.Information)
 		.build()
@@ -83,18 +84,22 @@ export function useSignalr(key = 'ConnectHub') {
 	function listenData() {
 		connection.on('OnlineHub', data => {
 			const res = JSON.parse(data)
-			const list = filterList(res.mergeViews, onlineData.list, ['ipAdress', 'deviceCode'])
-			setOnlineData(list, onlineData.info, refresh)
+			const list = res.isAll
+				? res.mergeViews
+				: filterList(res.mergeViews, onlineData.list, ['ipAdress', 'deviceCode'])
+			setOnlineData(list, onlineData.info, sendMessage)
 		})
 		connection.on('AlarmHub', data => {
 			const res = JSON.parse(data)
 			const list = res
-			setAlarmData(list, refresh)
+			setAlarmData(list, sendMessage)
 		})
 		connection.on('CommandHub', data => {
 			const res = JSON.parse(data)
-			const list = res
-			setCommandData(list, refresh)
+			const list = res.isAll
+				? res.list
+				: filterList(res.list, commandData.list, ['ipAdress', 'deviceCode'])
+			setCommandData(list, sendMessage)
 		})
 	}
 
@@ -145,7 +150,6 @@ function findHubKey(val) {
 		}
 	}
 }
-
 
 function filterList(source, target, keys = 'id', handle) {
 	const temp = Array.isArray(keys) ? keys : [keys]

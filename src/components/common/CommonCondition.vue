@@ -1,6 +1,17 @@
 <template>
 	<a-form :model="state" layout="inline" class="form">
 		<slot name="before"></slot>
+		<a-form-item label="IP地址：" v-if="layout.includes('ip')">
+			<Ipinput @changeIp="onChangeIp" />
+		</a-form-item>
+    <a-form-item label="安装位置：" v-if="layout.includes('location')">
+			<a-input
+				allowClear
+				v-model:value="state.location"
+				class="w-180-important"
+				placeholder="请输入安装位置"
+			/>
+		</a-form-item>
 		<a-form-item v-if="layout.includes('mapName')" label="地图名称：">
 			<a-input
 				class="w-180-important"
@@ -75,7 +86,9 @@ const props = defineProps({
 const state = reactive({
 	dictCode: '',
 	dictName: '',
-	time: []
+	time: [],
+  ip: '',
+  location: ''
 })
 
 const limitTime = ref()
@@ -128,6 +141,7 @@ function onCalendarChange(val) {
 function onOpenChange(open) {
 	if (open) limitTime.val = []
 }
+
 </script>
 
 <style lang="less" scoped>
