@@ -1,4 +1,12 @@
 export const sourceData = [
+  {
+    
+    name: 'Datav',
+    type: 'P',
+    path: '/datav',
+    component: 'datav/index',
+    title: '大屏'
+  },
 	{
 		name: 'Online Monitoring',
 		type: 'M',
@@ -102,6 +110,7 @@ export const sourceData = [
 ]
 
 export const permissions = [
+  'Datav',
 	'Online Monitoring',
 	'System Setting',
 	'DataSearch',
