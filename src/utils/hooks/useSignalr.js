@@ -87,7 +87,7 @@ export function useSignalr(key = 'ConnectHub') {
 			const list = res.isAll
 				? res.mergeViews
 				: filterList(res.mergeViews, onlineData.list, ['ipAdress', 'deviceCode'])
-			setOnlineData(list, onlineData.info, sendMessage)
+			setOnlineData(list, res.info, sendMessage)
 		})
 		connection.on('AlarmHub', data => {
 			const res = JSON.parse(data)
@@ -132,7 +132,9 @@ export function useSignalr(key = 'ConnectHub') {
 	 *
 	 */
 	function removeListener(connection) {
-		connection.off('ReceiveData')
+		connection.off('OnlineHub')
+		connection.off('AlarmHub')
+		connection.off('CommandHub')
 	}
 
 	onBeforeUnmount(() => {
