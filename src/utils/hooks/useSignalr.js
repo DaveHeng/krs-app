@@ -44,6 +44,7 @@ export function useSignalr(key = 'ConnectHub') {
 		try {
 			setConnectStatus(connectKey, CONNECTING)
 			await connection.start()
+			initSendMessage()
 			setConnectStatus(connectKey, CONNECTED)
 		} catch (err) {
 			console.log(err)
@@ -82,24 +83,24 @@ export function useSignalr(key = 'ConnectHub') {
 	 */
 
 	function listenData() {
-		connection.on('OnlineHub', data => {
+		connection.on('OnlineHub', (k, data) => {
 			const res = JSON.parse(data)
 			const list = res.isAll
 				? res.mergeViews
 				: filterList(res.mergeViews, onlineData.list, ['ipAdress', 'deviceCode'])
-			setOnlineData(list, res.info, sendMessage)
+			setOnlineData(list, res.info)
 		})
-		connection.on('AlarmHub', data => {
+		connection.on('AlarmHub', (k, data) => {
 			const res = JSON.parse(data)
 			const list = res
-			setAlarmData(list, sendMessage)
+			setAlarmData(list)
 		})
-		connection.on('CommandHub', data => {
+		connection.on('CommandHub', (k, data) => {
 			const res = JSON.parse(data)
 			const list = res.isAll
 				? res.list
 				: filterList(res.list, commandData.list, ['ipAdress', 'deviceCode'])
-			setCommandData(list, sendMessage)
+			setCommandData(list)
 		})
 	}
 
@@ -142,7 +143,14 @@ export function useSignalr(key = 'ConnectHub') {
 		closeConnection()
 	})
 
-	// initConnect()
+	function initSendMessage() {
+		setOnlineRefresh('SendCollieryOnlineData', sendMessage)
+		setAlarmRefresh('SendAlarmNoticeData', sendMessage)
+	}
+
+	return {
+		initConnect
+	}
 }
 
 function findHubKey(val) {
