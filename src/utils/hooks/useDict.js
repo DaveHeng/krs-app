@@ -1,12 +1,12 @@
 import { useLocalStorage } from './useLocalStorage'
 import { getDictInfo } from '@/api/dict'
 
-export const useDict = params => {
+export const useDict = (params, immediate = true) => {
 	const [getItem, setItem] = useLocalStorage()
 	const dictCount = ref(0)
 	const dict = reactive({})
 	const dictItemMap = reactive({})
-	getDict()
+	immediate && getDict()
 	// 获取字典信息
 	async function getDict() {
 		const numberResult = []
@@ -58,5 +58,5 @@ export const useDict = params => {
 		dictCount.value++
 	}
 
-	return [dict, dictItemMap, dictCount]
+	return [dict, dictItemMap, dictCount, getDict]
 }

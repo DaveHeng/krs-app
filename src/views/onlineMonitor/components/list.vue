@@ -132,7 +132,7 @@ const list = computed(() => {
 	// background: #1eb955;
 }
 ::v-deep(.ant-table-row) {
-	height: 57px !important;
+	height: 66px !important;
 	overflow-anchor: none;
 }
 ::v-deep(.ant-table-tbody) {
