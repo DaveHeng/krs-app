@@ -73,7 +73,9 @@ export function usePage({
 			fn(params)
 		}
 		querySearch.value = params
-		updateList()
+		updateList({
+			pageSize: limitQuery.pageSize
+		})
 	}
 
 	function updateList(query) {
