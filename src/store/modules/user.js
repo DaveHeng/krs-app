@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { useLocalStorage } from '@/utils/hooks/useLocalStorage'
+import { useLocalStorage, KEY } from '@/utils/hooks/useLocalStorage'
 
 export const useUserInfo = defineStore('user', () => {
 	const [getItem, setItem, removeAll] = useLocalStorage()
@@ -16,7 +16,7 @@ export const useUserInfo = defineStore('user', () => {
 			permissions,
 			fromUrl: sourceUrl,
 			username
-		} = JSON.parse(localStorage.getItem('cw_web'))
+		} = JSON.parse(localStorage.getItem(KEY))
 		setItem('token', token)
 		setItem('sourceUrl', sourceUrl)
 		setItem('sourceData', data)

@@ -6,7 +6,7 @@ import * as AntIcon from '@/components/icons/index.js'
 import { useLocalStorage } from '@/utils/hooks/useLocalStorage'
 // console.log(AntIcon)
 const hiddenMenuList = ['datav']
-const modules = import.meta.glob('../../views/*/*.vue')
+const modules = import.meta.glob('../../views/**/*.vue')
 export const usePermission = defineStore('permission', () => {
 	const [getItem] = useLocalStorage()
 	const state = reactive({

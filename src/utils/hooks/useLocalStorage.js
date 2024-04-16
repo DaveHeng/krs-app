@@ -1,4 +1,4 @@
-const KEY = 'cw_web1'
+export const KEY = 'cw_web1'
 export function useLocalStorage() {
 	const getItem = key => {
 		const temp = localStorage.getItem(KEY)
