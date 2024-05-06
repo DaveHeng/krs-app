@@ -161,6 +161,15 @@ export function usePage({
 		state.selectIds = []
 	}
 
+	function onBatchHandle() {
+		if (!state.selectIds.length) {
+			message.error('请选择要删除的数据')
+			return
+		} else {
+			onDelete(state.selectIds)
+		}
+	}
+
 	immediate && getList(transformFn)
 
 	return {
@@ -175,6 +184,7 @@ export function usePage({
 		onOpenAddDialog,
 		onOpenEditDialog,
 		onCloseDialog,
-		onChangeMode
+		onChangeMode,
+		onBatchHandle
 	}
 }
