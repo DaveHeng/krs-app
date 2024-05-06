@@ -1,68 +1,71 @@
 <template>
 	<a-form :model="state" layout="inline" class="form">
 		<slot name="before"></slot>
-		<a-form-item label="IP地址：" v-if="layout.includes('ip')">
-			<IpInput @changeIp="onChangeIp" />
-		</a-form-item>
-		<a-form-item label="安装位置：" v-if="layout.includes('location')">
-			<a-input
-				allowClear
-				v-model:value="state.location"
-				class="w-180-important"
-				placeholder="请输入安装位置"
-			/>
-		</a-form-item>
-		<a-form-item v-if="layout.includes('mapName')" label="地图名称：">
-			<a-input
-				class="w-180-important"
-				v-model:value="state.mapName"
-				placeholder="请输入地图名称"
-				allowClear
-			/>
-		</a-form-item>
-		<a-form-item v-if="layout.includes('mapStatus')" label="地图状态：">
-			<a-select
-				v-model:value="state.mapStatus"
-				allowClear
-				class="w-180-important"
-				placeholder="请选择地图状态"
-			>
-				<a-select-option :value="1">使用</a-select-option>
-				<a-select-option :value="0">禁用</a-select-option>
-			</a-select>
-		</a-form-item>
-		<a-form-item label="选择时间：" v-if="layout.includes('time')">
-			<a-range-picker v-model:value="state.time" allowClear format="YYYY-MM-DD" />
-		</a-form-item>
+		<template v-for="name of layout" :key="name">
+			<a-form-item label="IP地址：" v-if="name === 'ip'">
+				<IpInput @changeIp="onChangeIp" />
+			</a-form-item>
+			<a-form-item label="安装位置：" v-if="name === 'location'">
+				<a-input
+					allowClear
+					v-model:value="state.location"
+					class="w-180-important"
+					placeholder="请输入安装位置"
+				/>
+			</a-form-item>
+			<a-form-item v-if="name === 'mapName'" label="地图名称：">
+				<a-input
+					class="w-180-important"
+					v-model:value="state.mapName"
+					placeholder="请输入地图名称"
+					allowClear
+				/>
+			</a-form-item>
+			<a-form-item v-if="name === 'mapStatus'" label="地图状态：">
+				<a-select
+					v-model:value="state.mapStatus"
+					allowClear
+					class="w-180-important"
+					placeholder="请选择地图状态"
+				>
+					<a-select-option :value="1">使用</a-select-option>
+					<a-select-option :value="0">禁用</a-select-option>
+				</a-select>
+			</a-form-item>
+			<a-form-item label="选择时间：" v-if="name === 'time'">
+				<a-range-picker v-model:value="state.time" allowClear format="YYYY-MM-DD" />
+			</a-form-item>
 
-		<!-- 时间限制 -->
+			<!-- 时间限制 -->
 
-		<a-form-item label="选择时间：" v-if="layout.includes('limitTime')">
-			<a-range-picker
-				v-model:value="state.time"
-				:disabledDate="disabledDate"
-				@calendarChange="onCalendarChange"
-				@openChange="onOpenChange"
-				allowClear
-				format="YYYY-MM-DD"
-			/>
-		</a-form-item>
-		<a-form-item v-if="layout.includes('dictCode')" label="字典码：">
-			<a-input
-				v-model:value="state.dictCode"
-				placeholder="请输入字典码"
-				allowClear
-				class="w-180-important"
-			/>
-		</a-form-item>
-		<a-form-item v-if="layout.includes('dictName')" label="中文：">
-			<a-input
-				placeholder="请输入中文名称"
-				v-model:value="state.dictName"
-				allowClear
-				class="w-180-important"
-			/>
-		</a-form-item>
+			<a-form-item label="选择时间：" v-if="name === 'limitTime'">
+				<a-range-picker
+					v-model:value="state.time"
+					:disabledDate="disabledDate"
+					@calendarChange="onCalendarChange"
+					@openChange="onOpenChange"
+					allowClear
+					format="YYYY-MM-DD"
+				/>
+			</a-form-item>
+			<a-form-item v-if="name === 'dictCode'" label="字典码：">
+				<a-input
+					v-model:value="state.dictCode"
+					placeholder="请输入字典码"
+					allowClear
+					class="w-180-important"
+				/>
+			</a-form-item>
+			<a-form-item v-if="name === 'dictName'" label="中文：">
+				<a-input
+					placeholder="请输入中文名称"
+					v-model:value="state.dictName"
+					allowClear
+					class="w-180-important"
+				/>
+			</a-form-item>
+		</template>
+
 		<a-form-item>
 			<a-button type="primary" @click="handleSearch">
 				<SearchOutlined />
